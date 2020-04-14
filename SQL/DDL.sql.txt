@@ -1,0 +1,119 @@
+create table author (
+	id			varchar(10),
+	first_name		varchar(20),
+	last_name		varchar(20),
+	primary key(id)
+);
+
+create table address (
+	id			varchar(10),		
+	street			varchar(40),
+	suite_num		numeric(4, 0),
+	postal_code		varchar(6),
+	province		varchar(40),
+	city			varchar(40),
+	country			varchar(40),
+	primary key (id)
+);
+
+create table billing_information ( 
+	id			varchar(10),
+	card_number		numeric(16, 0),
+	cvv			numeric(3, 0),
+	first_name		varchar(20),
+	last_name		varchar(20),
+	address_id		varchar(10),
+	primary key (id),
+	foreign key (address_id) references address (id),
+	check (card_number > 0 and cvv > 0)
+);
+
+create table publisher (
+	publisher_name		varchar(40),
+	email			varchar(50),
+	phone_num		numeric(10, 0),
+	banking_account		numeric(7, 0),	
+	address_id		varchar(10),
+	primary key (publisher_name),
+	foreign key (address_id) references address (id)
+);
+
+create table genre (
+	genre_name	varchar(40),
+	primary key (genre_name)
+);
+
+create table book_genre (
+	ISBN			numeric(13, 0),			
+	genre_name		varchar(40),
+	primary key (ISBN, genre_name),
+	foreign key (genre_name) references genre (genre_name)
+);
+
+create table book (
+	ISBN				numeric(13, 0),
+	title				varchar(60),
+	price				numeric(4, 2),
+	num_pages			int,
+	year				numeric(4, 0),
+	quantity			int, 
+	commission			numeric(2, 2),
+	publisher_name			varchar(40),
+	primary key (ISBN),
+	foreign key (publisher_name) references publisher (publisher_name),
+	check (num_pages > 0 and commission < 1 and ISBN > 0)
+);
+
+create table written_by (
+	id	varchar(10),
+	ISBN	numeric(13, 0),
+	primary key (id, ISBN),
+	foreign key (id) references author (id),
+	foreign key (ISBN) references book (ISBN)
+);
+
+create table client (
+	id			varchar(10),
+	username		varchar(30),
+	password		varchar(30),
+	email			varchar(50),
+	billing_id		varchar(10),
+	shipping_id		varchar(10),
+	isOwner			boolean,
+	primary key (id),
+	foreign key (billing_id) references billing_information (id),
+	foreign key (shipping_id) references address (id)
+);
+
+create table shopping_cart (
+	id			varchar(10),
+	ISBN		numeric(13, 0),	
+	quantity	int,
+	primary key (id, ISBN),
+	foreign key (id) references client (id),
+	foreign key (ISBN) references book (ISBN)
+);
+
+create table purchase (
+	order_num		varchar(10),
+	id			varchar(10),
+	first_name		varchar(20),
+	last_name		varchar(20),
+	date			date,
+	hasArrived		boolean,
+	billing_id		varchar(10),
+	shipping_id		varchar(10), 
+	primary key (order_num),
+	foreign key (id) references client (id),
+	foreign key (billing_id) references billing_information (id),
+	foreign key (shipping_id) references address (id)
+);
+
+create table order_contains (
+	order_num		varchar(10),
+	ISBN			numeric(13, 0),
+	quantity 		int, 
+	primary key (order_num, ISBN), 
+	foreign key (order_num) references purchase (order_num),
+	foreign key (ISBN) references book (ISBN)
+);

@@ -1,0 +1,105 @@
+// 1. Searching entire Book collection 
+	// 1.1 Approximate Search for Books by Name
+	select title 
+	from book
+	where title ~* '%[___]';
+	
+	// 1.2 Search from Form
+	select ISBN
+	from book
+	where [___]
+
+
+// 2. Query for specific book by ISBN
+	select ISBN, title, price, publisher_name, num_pages, year, quantity 
+	from book
+	where ISBN = [___];
+
+// 3. Adding client to database (Registration)
+	
+	insert into client(id, username, password, email, billing_id, shipping_id, isOwner)
+	values(); 
+   
+
+// 4. Checking for existence/credentials of client (Sign-In)
+	select username, password
+	from client
+	where username = '___' and password = '___';
+
+// 5. Adding orders to database (Checking out -- Changes book quantity)
+ 	insert into order values(order_num
+	
+// 6. Query for specific order by order number (Tracking Order)
+	select hasArrived
+	from order
+	where order_num = [___];
+
+// 7. Adding books to collection (Owners can add new books -- Changes book quantity)
+	insert into books(ISBN, title, price, num_pages, year, quantity, commission, publisher_name)
+	values([___])
+			
+
+// 8. Removing books from collection by ISBN(Owners can remove books -- Changes book quantity)
+	delete from books
+	where ISBN = [___];
+	
+// 9. Query entire publisher collection
+	
+
+// 10. Query for specific publisher by name
+	select *
+	from publisher
+	where publisher_name = [___]; 
+
+// 11. Report Sales v. Expenditures (Client Orders v. Owner Orders)
+	// 11.1 Client Orders (Number of Client Orders | Avg Price)
+		select count (distinct order_num) 
+		from order 
+		where id in (select id from client)
+	
+	// 11.2 Owner Orders (Number of Owner Orders | Avg Price)
+	
+
+// 12. Report Sales per Genre
+
+// 13. Report Sales per Author
+
+// 14. Report Sales per Publisher
+
+// 15. Trigger order for books with quantity < 10 (Changes book quantity)
+	create trigger replenish 
+	after update of quantity on books
+	referencing old row as orow, new row as nrow
+	for each row
+	when nrow.quantity < 10 and orow.quantity >= 10
+	begin atomic
+		insert into order_contains(order_num, ISBN, quantity) 
+		values ([order_num], orow.ISBN, monthly_sold(orow.ISBN))	
+	end; 
+
+// 16. Trigger quantity change for ordered books
+	create trigger ordered
+	after insert on order_contains
+	begin atomic 
+
+// 17. Trigger Order for Order Contains 
+
+// 18. Function to Find Num Sold in Given Month
+create function monthly_sold(book_ISBN numeric(13, 0))
+	returns integer
+	begin
+	declare num_sold integer;
+		select count(*) into num_sold
+		from order_contains
+		where ISBN = book_ISBN and order_num in (select order_num
+												 from order
+												 where date >= date_trunc('month', current_date - interval '1' month)
+														and date < date_trunc('month', current_date)
+												)
+	return d count;
+	end
+
+// 19. Function to Find 
+
+
+
