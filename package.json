@@ -1,0 +1,19 @@
+{
+  "name": "lookinnabook",
+  "version": "1.0.0",
+  "description": "COMP3005 Winter 2020 Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Katrina Ronquillo & Nick Scott",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "clear": "^0.1.0",
+    "figlet": "^1.3.0",
+    "inquirer": "^7.1.0",
+    "pg": "^8.0.2"
+  }
+}
