@@ -24,7 +24,7 @@ module.exports = {
         name: 'action',
         type: 'list',
         message: 'Welcome! What do you want to do?',
-        choices: ['Log In', 'Register', new inquirer.Separator(), 'Exit Program']
+        choices: ['Log In', 'Register', 'Browse Bookstore', new inquirer.Separator(), 'Exit Program']
       }
     ];
     return inquirer.prompt(questions);
@@ -41,7 +41,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'E-mail: ';
           }
         }
       },
@@ -54,7 +54,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Username: ';
           }
         }
       },
@@ -68,7 +68,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Password: ';
           }
         }
       },
@@ -81,7 +81,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - Card Number: ';
           }
         }
       },
@@ -94,7 +94,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - CVV: ';
           }
         }
       },
@@ -107,7 +107,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - First Name: ';
           }
         }
       },
@@ -120,7 +120,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - Last Name: ';
           }
         }
       },
@@ -133,7 +133,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - Street: ';
           }
         }
       },
@@ -146,7 +146,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - Suite Number: ';
           }
         }
       },
@@ -155,11 +155,11 @@ module.exports = {
         type: 'input',
         message: 'Billing Information - Postal Code: ',
         validate: function (value) {
-          if (value.length == 4) {
+          if (value.length == 6) {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - Postal Code: ';
           }
         }
       },
@@ -172,7 +172,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - City: ';
           }
         }
       },
@@ -185,7 +185,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - Province: ';
           }
         }
       },
@@ -198,7 +198,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Billing Information - Country: ';
           }
         }
       },
@@ -211,7 +211,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Shipping Information - Street: ';
           }
         }
       },
@@ -224,7 +224,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Shipping Information - Suite Number: ';
           }
         }
       },
@@ -233,11 +233,11 @@ module.exports = {
         type: 'input',
         message: 'Shipping Information - Postal Code: ',
         validate: function (value) {
-          if (value.length == 4) {
+          if (value.length == 6) {
             return true;
           }
           else {
-            return message;
+            return 'Shipping Information - Postal Code: ';
           }
         }
       },
@@ -250,7 +250,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Shipping Information - City: ';
           }
         }
       },
@@ -263,7 +263,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Shipping Information - Province: ';
           }
         }
       },
@@ -276,7 +276,7 @@ module.exports = {
             return true;
           }
           else {
-            return message;
+            return 'Shipping Information - Country: ';
           }
         }
       },
@@ -309,8 +309,11 @@ module.exports = {
         type: 'list',
         message: 'What do you want to do?',
         choices: [
-          'Browse book collection',
-          'Approximate search for books',
+          'Browse entire book collection',
+          'Search for books by genre',
+          'Search for books by publisher',
+          'Search for specific book by ISBN',
+          'Approximate search for books by title',
           'View Cart',
           'Track Orders',
           'View Store Reports',
@@ -318,8 +321,35 @@ module.exports = {
           'Exit Program'
         ]
       }
+    ]; 
+    return inquirer.prompt(questions);
+  },
+
+  searchBookISBN: () => {
+    const questions = [
+      module.exports.createquestion('isbn', 'input', 'ISBN: ')
     ];
     return inquirer.prompt(questions);
   },
 
+  searchBookGenre: () => {
+    const questions = [
+      module.exports.createquestion('genre', 'input', 'Genre: ')
+    ];
+    return inquirer.prompt(questions);
+  },
+
+  searchBookTitle: () => {
+    const questions = [
+      module.exports.createquestion('title', 'input', 'Title: ')
+    ];
+    return inquirer.prompt(questions);
+  },
+
+  searchBookPublisher: () => {
+    const questions = [
+      module.exports.createquestion('publisher', 'input', 'Publisher: ')
+    ];
+    return inquirer.prompt(questions);
+  }
 }
